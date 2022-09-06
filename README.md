@@ -19,7 +19,7 @@ To execute:
 
 ## Download
 
-The RoBMEX modelling framework can be downloaded at [/releases](/releases).
+The RoBMEX modelling framework can be downloaded at https://github.com/lias-laboratory/robmex/releases.
 
 ## Install
 
