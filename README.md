@@ -1,4 +1,4 @@
-# ROBMEX
+# RoBMEX
 
 This page is dedicated to describe the RoBMEX modelling framework, its dependencies, download and use.
 
