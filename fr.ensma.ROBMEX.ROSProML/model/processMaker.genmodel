@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.ensma.ROBMEX.ROSProML/src" modelPluginID="fr.ensma.ROBMEX.ROSProML"
+    modelName="ProcessMaker" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    usedGenPackages="../../fr.ensma.ROBMEX.ROSModL/model/rosModel.genmodel#//rosModel"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>processMaker.ecore</foreignModel>
+  <genPackages prefix="ProcessMaker" disposableProviderFactory="true" ecorePackage="processMaker.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="processMaker.ecore#//ECalculations">
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//ECalculations/SUM"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//ECalculations/SUBTRACTION"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//ECalculations/MULTIPLICATION"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//ECalculations/DIVISION"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//ECalculations/POWER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="processMaker.ecore#//LogicalComparison">
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//LogicalComparison/equals"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//LogicalComparison/smaller"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//LogicalComparison/greater"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//LogicalComparison/smallerOrEqual"/>
+      <genEnumLiterals ecoreEnumLiteral="processMaker.ecore#//LogicalComparison/greaterOrEqual"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//Instructions">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//Instructions/next"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Loop">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Loop/while"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Loop/loop"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//If">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//If/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//If/ifBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//If/elseBlock"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//BooleanExpression"/>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//Composition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Composition/booleanexpression"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Comparison">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Comparison/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Comparison/type"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Not">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Not/booleanexpression"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//And"/>
+    <genClasses ecoreClass="processMaker.ecore#//Or"/>
+    <genClasses ecoreClass="processMaker.ecore#//Operation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Operation/type"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Hardcoded">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Hardcoded/instruction"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//ServiceBlock">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//ServiceBlock/receivedRequest"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//ServiceBlock/sentResponse"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//Variable"/>
+    <genClasses ecoreClass="processMaker.ecore#//AffectVariable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//AffectVariable/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//AffectVariable/valueOf"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//AffectVariable/arrayPosition"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//LocalVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//LocalVariable/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//LocalVariable/constantValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//LocalVariable/type"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//RequestService">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//RequestService/serviceport"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//InternalBlock">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//InternalBlock/instructions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//InternalBlock/InternalVariable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//InternalBlock/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//InternalBlock/first"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//TwoTermsOperation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//TwoTermsOperation/firstTerm"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//TwoTermsOperation/secondTerm"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//UpdateGlobalVariable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//UpdateGlobalVariable/dataport"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Functionality">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Functionality/main"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Functionality/serviceblock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Functionality/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Functionality/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Functionality/outputs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Functionality/frequency"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Functionality/serviceport"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Struct">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Struct/members"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//SimpleVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//SimpleVariable/type"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//DataPort">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//DataPort/variable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//DataPort/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//GlobalVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//GlobalVariable/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="processMaker.ecore#//OperationTerm"/>
+    <genClasses ecoreClass="processMaker.ecore#//ReferenceVariable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//ReferenceVariable/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Array">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Array/size"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//Array/type"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//Constant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute processMaker.ecore#//Constant/constantValue"/>
+    </genClasses>
+    <genClasses ecoreClass="processMaker.ecore#//ServicePort">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//ServicePort/requestSent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference processMaker.ecore#//ServicePort/responseReceived"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//ServicePort/requestRosService"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference processMaker.ecore#//ServicePort/requestService"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

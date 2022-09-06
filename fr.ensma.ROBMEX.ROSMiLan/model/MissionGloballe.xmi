@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ROSMiLan:Mission
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ROSMiLan="http://www.example.org/ROSMiLan"
+    xsi:schemaLocation="http://www.example.org/ROSMiLan ROSMiLan.ecore"
+    name="Généraliste"
+    itStartsWith="Armer">
+  <steps xsi:type="ROSMiLan:Element"
+      next="Décoller"
+      name="Armer">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/Arm.xmi#Arm"/>
+  </steps>
+  <steps xsi:type="ROSMiLan:Element"
+      next="SeMouvementer"
+      name="Décoller">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/TakeOff.xmi#TakeOff"/>
+  </steps>
+  <steps xsi:type="ROSMiLan:Multitask"
+      next="Atterrir"
+      name="SeMouvementer">
+    <steps xsi:type="ROSMiLan:Element"
+        name="DeciderDirection">
+      <core
+          href="../../fr.ensma.ROBMEX.ROSProML/model/DecideDirection.xmi#decideDirection"/>
+    </steps>
+    <steps xsi:type="ROSMiLan:Element"
+        name="ControlerMoteurs">
+      <core
+          href="../../fr.ensma.ROBMEX.ROSProML/model/CommandThrottle.xmi#commandThrottle"/>
+    </steps>
+    <dataModule
+        name="Reverse"/>
+    <dataModule
+        xsi:type="ROSMiLan:ExistingTopic"
+        name="distance">
+      <referenceTo
+          href="../../fr.ensma.ROBMEX.ROSModL/model/mavros.xmi#//@rospackage.0/@topic.4"/>
+    </dataModule>
+    <dataModule
+        xsi:type="ROSMiLan:ExistingTopic"
+        name="moteurs">
+      <referenceTo
+          href="../../fr.ensma.ROBMEX.ROSModL/model/mavros.xmi#//@rospackage.0/@topic.6"/>
+    </dataModule>
+  </steps>
+  <steps xsi:type="ROSMiLan:Element"
+      name="Atterrir">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/Land.xmi#Land"/>
+  </steps>
+</ROSMiLan:Mission>

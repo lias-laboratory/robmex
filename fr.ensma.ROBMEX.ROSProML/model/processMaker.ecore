@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="processMaker" nsURI="http://www.example.org/processMaker" nsPrefix="processMaker">
+  <eClassifiers xsi:type="ecore:EClass" name="Instructions" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//Instructions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Loop" eSuperTypes="#//Instructions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="while" lowerBound="1" eType="#//BooleanExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loop" lowerBound="1" eType="#//InternalBlock"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="If" eSuperTypes="#//Instructions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//BooleanExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ifBlock" lowerBound="1"
+        eType="#//InternalBlock" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elseBlock" eType="#//InternalBlock"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanExpression" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Composition" abstract="true" eSuperTypes="#//BooleanExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="booleanexpression" lowerBound="2"
+        upperBound="-1" eType="#//BooleanExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Comparison" eSuperTypes="#//BooleanExpression #//TwoTermsOperation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//LogicalComparison"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Not" eSuperTypes="#//BooleanExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="booleanexpression" lowerBound="1"
+        eType="#//BooleanExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="And" eSuperTypes="#//Composition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Or" eSuperTypes="#//Composition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#//TwoTermsOperation #//OperationTerm">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ECalculations"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Hardcoded" eSuperTypes="#//Instructions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="instruction" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceBlock" eSuperTypes="#//InternalBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receivedRequest" lowerBound="1"
+        eType="#//DataPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sentResponse" lowerBound="1"
+        eType="#//DataPort" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AffectVariable" eSuperTypes="#//Instructions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+        eType="#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueOf" lowerBound="1"
+        eType="#//OperationTerm" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayPosition" upperBound="-1"
+        eType="#//OperationTerm" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalVariable" eSuperTypes="#//Variable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constantValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="ecore:EEnum ../../fr.ensma.ROBMEX.ROSModL/model/rosModel.ecore#//RosDataType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequestService" eSuperTypes="#//Instructions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceport" lowerBound="1"
+        eType="#//ServicePort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"
+        eType="#//Instructions" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="InternalVariable" upperBound="-1"
+        eType="#//LocalVariable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="first" lowerBound="1" eType="#//Instructions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TwoTermsOperation" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="firstTerm" lowerBound="1"
+        eType="#//OperationTerm" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="secondTerm" lowerBound="1"
+        eType="#//OperationTerm" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ECalculations">
+    <eLiterals name="SUM"/>
+    <eLiterals name="SUBTRACTION" value="1"/>
+    <eLiterals name="MULTIPLICATION" value="2"/>
+    <eLiterals name="DIVISION" value="3"/>
+    <eLiterals name="POWER" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LogicalComparison">
+    <eLiterals name="equals"/>
+    <eLiterals name="smaller" value="1"/>
+    <eLiterals name="greater" value="2"/>
+    <eLiterals name="smallerOrEqual" value="3"/>
+    <eLiterals name="greaterOrEqual" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateGlobalVariable" eSuperTypes="#//Instructions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataport" lowerBound="1"
+        eType="#//DataPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Functionality">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="main" lowerBound="1" eType="#//InternalBlock"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceblock" upperBound="-1"
+        eType="#//ServiceBlock" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//DataPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//DataPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frequency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceport" upperBound="-1"
+        eType="#//ServicePort" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Struct" eSuperTypes="#//GlobalVariable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" lowerBound="1"
+        upperBound="-1" eType="#//GlobalVariable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleVariable" eSuperTypes="#//GlobalVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="ecore:EEnum ../../fr.ensma.ROBMEX.ROSModL/model/rosModel.ecore#//RosDataType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+        eType="#//GlobalVariable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GlobalVariable" abstract="true" eSuperTypes="#//Variable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationTerm" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceVariable" eSuperTypes="#//OperationTerm">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+        eType="#//Variable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Array" eSuperTypes="#//GlobalVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//GlobalVariable"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Constant" eSuperTypes="#//OperationTerm">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constantValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServicePort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requestSent" lowerBound="1"
+        eType="#//DataPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responseReceived" lowerBound="1"
+        eType="#//DataPort" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requestRosService" eType="ecore:EClass ../../fr.ensma.ROBMEX.ROSModL/model/rosModel.ecore#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requestService" eType="#//ServiceBlock"/>
+  </eClassifiers>
+</ecore:EPackage>

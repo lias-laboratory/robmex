@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.ensma.ROBMEX.ROSModL/src" modelPluginID="fr.ensma.ROBMEX.ROSModL"
+    modelName="RosModel" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>rosModel.ecore</foreignModel>
+  <genPackages prefix="RosModel" disposableProviderFactory="true" ecorePackage="rosModel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="rosModel.ecore#//RosDataType">
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/int8"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/int16"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/int32"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/int64"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/uint8"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/uint16"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/uint32"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/uint64"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/float32"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/float64"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/string"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/bool"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/time"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosDataType/duration"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="rosModel.ecore#//RosVersion">
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosVersion/hydro"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosVersion/indigo"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosVersion/jade"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosVersion/kinetic"/>
+      <genEnumLiterals ecoreEnumLiteral="rosModel.ecore#//RosVersion/luna"/>
+    </genEnums>
+    <genClasses ecoreClass="rosModel.ecore#//RosPackage">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosPackage/node"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosPackage/topic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosPackage/msg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosPackage/srv"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//RosPackage/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosPackage/service"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//RosPackage/path"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosPackage/subpackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//RosPackage/exists"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//Topic">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//Topic/struct"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Topic/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//Node">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//Node/subscribeTo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//Node/publishTo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//Node/clientOf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Node/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Node/frequency"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//Node/serverOf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Node/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Node/codeReference"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//MsgDataStruct">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//MsgDataStruct/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//MsgDataStruct/attribute"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//SrvDataStruct">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//SrvDataStruct/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//SrvDataStruct/requestAttributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//SrvDataStruct/responseAttributes"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//Service">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//Service/srvdatastruct"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Service/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//RosSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//RosSystem/rospackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//RosSystem/version"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rosModel.ecore#//Attribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Attribute/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//SimpleAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//SimpleAttribute/type"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//ComposedAttribute">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rosModel.ecore#//ComposedAttribute/type"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//AttributeArray">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//AttributeArray/size"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rosModel.ecore#//AttributeArray/type"/>
+    </genClasses>
+    <genClasses ecoreClass="rosModel.ecore#//Constant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rosModel.ecore#//Constant/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

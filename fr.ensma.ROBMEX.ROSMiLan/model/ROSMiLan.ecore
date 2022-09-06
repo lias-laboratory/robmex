@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ROSMiLan" nsURI="http://www.example.org/ROSMiLan" nsPrefix="ROSMiLan">
+  <eClassifiers xsi:type="ecore:EClass" name="Mission" eSuperTypes="#//BlockOfConnectedFunctions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="itStartsWith" lowerBound="1"
+        eType="#//MissionMember"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MissionMember" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="next" eType="#//MissionMember"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element" eSuperTypes="#//MissionMember">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frequency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="core" eType="ecore:EClass ../../fr.ensma.ROBMEX.ROSProML/model/processMaker.ecore#//Functionality"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Multitask" eSuperTypes="#//MissionMember #//BlockOfConnectedFunctions">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="launch" lowerBound="2"
+        upperBound="-1" eType="#//MissionMember"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Library">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//MissionMember" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataModule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connect" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass ../../fr.ensma.ROBMEX.ROSProML/model/processMaker.ecore#//DataPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BlockOfConnectedFunctions" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="steps" lowerBound="1" upperBound="-1"
+        eType="#//MissionMember" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataModule" upperBound="-1"
+        eType="#//DataModule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExistingTopic" eSuperTypes="#//DataModule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenceTo" lowerBound="1"
+        eType="ecore:EClass ../../fr.ensma.ROBMEX.ROSModL/model/rosModel.ecore#//Topic"/>
+  </eClassifiers>
+</ecore:EPackage>

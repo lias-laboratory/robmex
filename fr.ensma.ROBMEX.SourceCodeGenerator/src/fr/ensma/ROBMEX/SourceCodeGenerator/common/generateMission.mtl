@@ -1,0 +1,146 @@
+[comment encoding = UTF-8 /]
+[module generateMission('/fr.ensma.ROBMEX.ROSMiLan/model/ROSMiLan.ecore', '/fr.ensma.ROBMEX.ROSProML/model/processMaker.ecore', '/fr.ensma.ROBMEX.ROSModL/model/rosModel.ecore')/]
+[import fr::ensma::ROBMEX::SourceCodeGenerator::common::generateFunctionality /]
+[import fr::ensma::ROBMEX::SourceCodeGenerator::common::generateRosNode /]
+
+
+[template public generateMission(mission : Mission)]
+
+	[comment @main /]
+	[file ('mission_'+mission.name+'_mainNode.cpp', false, 'UTF-8')]
+
+[comment]
+
+		MAIN GENERATION
+		===============
+
+	#include stuff
+	declare global variables
+	
+	generateMissionNode:
+		new file
+		if element -> generate element
+		if mutitask -> for each FIST generateMissionNode
+
+[/comment]
+
+
+// AUTOMATICALLY GENERATED FILE FOR MISSION: [mission.name/]
+
+[comment]
+	#include "library.h"
+	#include "Package/DataStructure.h"
+[/comment]
+
+#include "ros/ros.h"
+[for (dm : DataModule | mission.dataModule)]
+[if (dm.oclIsTypeOf(ExistingTopic))]#include "[dm.oclAsType(ExistingTopic).referenceTo.struct.eContainer(RosPackage).name/]/[dm.oclAsType(ExistingTopic).referenceTo.struct.name/].h"
+[/if]
+[/for]
+[if not(mission.steps->any(oclIsTypeOf(Multitask)).oclIsInvalid())]#include "std_msgs/Int16.h"
+[/if]
+
+int main(int argc, char** argv)
+{
+	ros::init(argc, argv, "mission_[self.name/]");
+	ros::NodeHandle n;
+
+	[for (s : MissionMember | mission.steps)]
+		block_expression
+	[/for]
+
+[comment]
+	[for (topic : Topic | self.publishTo)]
+	ros::Publisher pub_[topic.name.replace('/', '_')/] = n.advertise<[topic.struct.eContainer(RosPackage).name/]::[topic.struct.name/]>("[topic.name/]", 1);
+	[/for]
+
+	[for (topic : Topic | self.subscribeTo)]
+	ros::Subscriber subs_[topic.name.replace('/', '_')/] = n.subscribe("[topic.name/]", 1, callback_[topic.name.replace('/', '_')/]);
+	[/for]
+	
+	[for (service : Service | self.serverOf)]
+	ros::ServiceServer serv_[service.name.replace('/', '_')/] = n.advertiseService("[service.name/]", serviceFunction_[service.name.replace('/', '_')/]);
+	[/for]
+
+	[for (service : Service | self.clientOf)]
+	ros::ServiceClient client_[service.name.replace('/', '_')/] = n.serviceClient<[service.srvdatastruct.eContainer(RosPackage).name/]::[service.srvdatastruct.name/]>("[service.name/]");
+	[/for]
+[/comment]
+
+[for (dp : DataModule | mission.dataModule)]
+	generateVariable(dp)
+[/for]
+
+}
+
+	[/file]
+[/template]
+
+
+[template public generateMsgFile(dm : DataModule)]
+
+
+
+	[for(it : DataModule | mission.dataModule)]
+		[if(not(it.oclIsTypeOf(ExistingTopic)))][generateMsgFile(it)/][/if]
+	[/for]
+
+	
+/]
+[file ( 'msg/'+dm.name+'.msg', false, 'UTF-8') ]
+[dm.connect->any(true).variable.name/]
+[/file]
+
+[/template]
+
+
+[template public generateMsgSignature(var : GlobalVariable)]
+[if (var.oclIsTypeOf(Struct))] [for (svar : GlobalVariable | var.oclAsType(Struct).members)]
+			[generateMsgSignature(svar)/]
+		[/for] [elseif
+	(var.oclIsTypeOf(Array))] [generateArrayMsg(var.oclAsType(Array))/] [elseif
+	(var.oclIsTypeOf(SimpleVariable))] [getVarType(var.oclAsType(SimpleVariable))/] [generateVariableName(var.oclAsType(SimpleVariable))/]; [/if]
+ [/for]
+[/template]
+
+
+[template public generateArrayMsg(var : Array)]
+	[if 
+		(var.type.oclIsTypeOf(SimpleVariable))] [var.type.oclAsType(SimpleVariable).type/] [ '[' /][if (var.oclAsType(Array).size <> 0)][var.oclAsType(Array).size/][/if][ ']' /] [var.name/]; [elseif
+		(var.type.oclIsTypeOf(Struct))] [var.type.name/] [ '[' /][if (var.oclAsType(Array).size <> 0)][var.oclAsType(Array).size/][/if][ ']' /] [var.name/]; [elseif
+		(var.type.oclIsTypeOf(Array))] [generateArrayMsg(var.type.oclAsType(Array))/] [ '[' /][if (var.oclAsType(Array).size <> 0)][var.oclAsType(Array).size/][/if][ ']' /] [var.name/]; [/if]
+[/template]
+
+
+
+[comment 
+
+	generate node code from its elements
+
+	starting by every global variable
+
+	then the functionalities
+
+ /]
+
+[template public generateNewNode(member : MissionMember, mission : Mission)]
+
+[file ('mission_'+mission.name+'_node_'+member.name+'.cpp', false, 'UTF-8')]
+
+	newNode
+
+[/file]
+
+[/template]
+
+
+[comment 
+
+mission
+	-> separate nodes
+	-> create nodes
+	-> create topics
+	// ATL
+		-> create code blocks
+		// Acceleo
+/]

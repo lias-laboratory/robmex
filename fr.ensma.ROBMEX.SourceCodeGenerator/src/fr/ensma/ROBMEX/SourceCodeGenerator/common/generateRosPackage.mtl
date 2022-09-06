@@ -1,0 +1,100 @@
+[comment encoding = UTF-8 /]
+[module generateRosPackage('http://www.example.org/rosModel')]
+[import fr::ensma::ROBMEX::SourceCodeGenerator::common::generateCMakeLists /]
+[import fr::ensma::ROBMEX::SourceCodeGenerator::common::generatePackageXML /]
+
+
+[template public generateMsgFiles(struct : MsgDataStruct)]
+
+[comment 
+
+	MSG File:
+
+		constantType constantName = constantValue
+		variableType variableName	
+ /]
+
+[file ('msg/'+ struct.name +'.msg', false, 'Cp1252')]
+	[for (element : Attribute | struct.attribute)]
+		[if (element.oclIsTypeOf(Constant))]
+			[element.oclAsType(Constant).type/] [element.name/] = [element.oclAsType(Constant).value/]
+		[/if]
+	[/for]
+
+	[for (element : Attribute | struct.attribute)]
+		[if (element.oclIsTypeOf(SimpleAttribute))]
+			[element.oclAsType(SimpleAttribute).type/] [element.name/]
+		[elseif (element.oclIsTypeOf(AttributeArray))]
+			[element.oclAsType(AttributeArray).type.name/] [element.name/] 
+		[elseif (element.oclIsTypeOf(ComposedAttribute))]
+			[element.oclAsType(ComposedAttribute).type.name/] [element.name/]
+		[/if]
+	[/for]
+[/file]
+
+[/template]
+
+
+
+[template public generateSrvFiles(struct : SrvDataStruct)]
+
+[comment 
+
+	SRV File:
+		
+		constantType constantName = constantValue
+		requestVariableType requestVariableName
+		---
+		responseVariableType responseVariableName
+ /]
+
+[file ('srv/'+[struct.name/]+'.srv', false, 'Cp1252')]
+	[for (element : Attribute | struct.requestAttributes)]
+		[if (element.oclIsTypeOf(Constant))]
+			[element.oclAsType(Constant).type/] [element.name/] = [element.oclAsType(Constant).value/]
+		[/if]
+	[/for]
+	[for (element : Attribute | struct.responseAttributes)]
+		[if (element.oclIsTypeOf(Constant))]
+			[element.oclAsType(Constant).type/] [element.name/] = [element.oclAsType(Constant).value/]
+		[/if]
+	[/for]
+
+	[for (element : Attribute | struct.requestAttributes)]
+		[if (element.oclIsTypeOf(SimpleAttribute))]
+			[element.oclAsType(SimpleAttribute).type/] [element.name/]
+		[elseif (element.oclIsTypeOf(AttributeArray))]
+			[element.oclAsType(AttributeArray).type.name/] [element.name/] 
+		[elseif (element.oclIsTypeOf(ComposedAttribute))]
+			[element.oclAsType(ComposedAttribute).type.name/] [element.name/]
+		[/if]
+	[/for]
+---
+	[for (element : Attribute | struct.responseAttributes)]
+		[if (element.oclIsTypeOf(SimpleAttribute))]
+			[element.oclAsType(SimpleAttribute).type/] [element.name/]
+		[elseif (element.oclIsTypeOf(AttributeArray))]
+			[element.oclAsType(AttributeArray).type.name/] [element.name/] 
+		[elseif (element.oclIsTypeOf(ComposedAttribute))]
+			[element.oclAsType(ComposedAttribute).type.name/] [element.name/]
+		[/if]
+	[/for]
+[/file]
+
+[/template]
+
+[template public generateRosPackage(pack : RosPackage)]
+
+	[comment @main /]
+	[for (it : MsgDataStruct | pack.msg)]
+		[generateMsgFiles(it)/]
+	[/for]
+
+	[for (it : SrvDataStruct | pack.srv)]
+		[generateSrvFiles(it)/]
+	[/for]
+
+	[generateCMakeLists(pack)/]
+	[generatePackageXml(pack)/]
+
+[/template]

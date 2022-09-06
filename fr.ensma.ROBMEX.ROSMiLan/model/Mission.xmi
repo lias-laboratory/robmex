@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ROSMiLan:Mission
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ROSMiLan="http://www.example.org/ROSMiLan"
+    xsi:schemaLocation="http://www.example.org/ROSMiLan ROSMiLan.ecore"
+    name="AvoidObstacle"
+    itStartsWith="EvalDistanceAndAdvanceOrGoBack">
+  <steps xsi:type="ROSMiLan:Multitask"
+      name="EvalDistanceAndAdvanceOrGoBack">
+    <steps xsi:type="ROSMiLan:Element"
+        name="commandThrottleFunc"
+        frequency="7.0">
+      <core
+          href="../../fr.ensma.ROBMEX.ROSProML/model/CommandThrottle.xmi#commandThrottle"/>
+    </steps>
+    <steps xsi:type="ROSMiLan:Element"
+        name="decideDirectionFunc"
+        frequency="11.0">
+      <core
+          href="../../fr.ensma.ROBMEX.ROSProML/model/DecideDirection.xmi#decideDirection"/>
+    </steps>
+    <dataModule
+        name="VF">
+      <connect
+          href="../../fr.ensma.ROBMEX.ROSProML/model/DecideDirection.xmi#reverse"/>
+      <connect
+          href="../../fr.ensma.ROBMEX.ROSProML/model/CommandThrottle.xmi#reverseThrottle"/>
+    </dataModule>
+    <dataModule
+        xsi:type="ROSMiLan:ExistingTopic"
+        name="motorPower">
+      <connect
+          href="../../fr.ensma.ROBMEX.ROSProML/model/CommandThrottle.xmi#motorPower"/>
+      <referenceTo
+          href="../../fr.ensma.ROBMEX.ROSModL/model/mavros.xmi#//@rospackage.0/@topic.6"/>
+    </dataModule>
+    <dataModule
+        xsi:type="ROSMiLan:ExistingTopic"
+        name="distanceToObstacle">
+      <connect
+          href="../../fr.ensma.ROBMEX.ROSProML/model/DecideDirection.xmi#distance"/>
+      <referenceTo
+          href="../../fr.ensma.ROBMEX.ROSModL/model/mavros.xmi#//@rospackage.0/@topic.4"/>
+    </dataModule>
+  </steps>
+</ROSMiLan:Mission>

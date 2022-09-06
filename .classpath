@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="fr.ensma.ROBMEX.ROSMiLan/src"/>
+	<classpathentry kind="src" path="fr.ensma.ROBMEX.ROSModL/src"/>
+	<classpathentry kind="src" path="fr.ensma.ROBMEX.ROSProML/src"/>
+	<classpathentry kind="src" path="fr.ensma.ROBMEX.SourceCodeGenerator/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

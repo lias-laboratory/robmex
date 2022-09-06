@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rosModel:RosSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rosModel="http://www.example.org/rosModel" xsi:schemaLocation="http://www.example.org/rosModel rosModel.ecore">
+  <rospackage name="mavros" path="">
+    <node subscribeTo="//@rospackage.0/@topic.6 //@rospackage.0/@topic.5 //@rospackage.0/@topic.4" publishTo="//@rospackage.0/@topic.0 //@rospackage.0/@topic.1 //@rospackage.0/@topic.2 //@rospackage.0/@topic.4" name="mavros" serverOf="//@rospackage.0/@service.0 //@rospackage.0/@service.1 //@rospackage.0/@service.2 //@rospackage.0/@service.3 //@rospackage.0/@service.4 //@rospackage.0/@service.5 //@rospackage.0/@service.6 //@rospackage.0/@service.7 //@rospackage.0/@service.8 //@rospackage.0/@service.9" description="Communicates by MAVLink Protocol with ArduPilot and PixHawk the messages sent by ROS nodes"/>
+    <topic struct="//@rospackage.0/@subpackage.0/@msg.0" name="state"/>
+    <topic struct="//@rospackage.0/@subpackage.0/@msg.1" name="battery"/>
+    <topic struct="//@rospackage.0/@subpackage.0/@msg.2" name="extended_state"/>
+    <topic struct="//@rospackage.0/@subpackage.0/@msg.4" name="missions/waypoints"/>
+    <topic struct="//@rospackage.1/@msg.0" name="global_position/rel_alt"/>
+    <topic struct="//@rospackage.2/@msg.1" name="setpoint_position/local"/>
+    <topic struct="//@rospackage.0/@subpackage.0/@msg.5" name="rc/override"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.0" name="cmd/arming"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.1" name="cmd/set_home"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.2" name="cmd/takeoff"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.2" name="cmd/land"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.3" name="mission/pull"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.4" name="mission/push"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.5" name="mission/clear"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.6" name="mission/set_current"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.7" name="cmd/trigger_control"/>
+    <service srvdatastruct="//@rospackage.0/@subpackage.0/@srv.8" name="param/set"/>
+    <subpackage name="mavros_msgs">
+      <msg name="State">
+        <attribute xsi:type="rosModel:ComposedAttribute" name="header"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="connected" type="bool"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="armed" type="bool"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="guided" type="bool"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="mode" type="string"/>
+      </msg>
+      <msg name="BatteryStatus">
+        <attribute xsi:type="rosModel:ComposedAttribute" name="header"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="voltage" type="float32"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="current" type="float32"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="remaining" type="float32"/>
+      </msg>
+      <msg name="ExtendedState">
+        <attribute xsi:type="rosModel:ComposedAttribute" name="header"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="vtol_state" type="uint8"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="landed_state" type="uint8"/>
+      </msg>
+      <msg name="Waypoint">
+        <attribute xsi:type="rosModel:SimpleAttribute" name="frame" type="uint8"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="command" type="uint16"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="is_current" type="bool"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="autocontinue" type="bool"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="param1" type="float32"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="param2" type="float32"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="param3" type="float32"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="param4" type="float32"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="x_lat" type="float64"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="y_long" type="float64"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="z_alt" type="float64"/>
+      </msg>
+      <msg name="WaypointList">
+        <attribute xsi:type="rosModel:AttributeArray" name="waypoints">
+          <type xsi:type="rosModel:ComposedAttribute" name="waypoint"/>
+        </attribute>
+      </msg>
+      <msg name="OverrideRCIn">
+        <attribute xsi:type="rosModel:AttributeArray" name="channels" size="8">
+          <type xsi:type="rosModel:SimpleAttribute" name="channel" type="uint16"/>
+        </attribute>
+      </msg>
+      <msg name="ParamValue">
+        <attribute xsi:type="rosModel:SimpleAttribute" name="integer" type="int64"/>
+        <attribute xsi:type="rosModel:SimpleAttribute" name="real" type="float64"/>
+      </msg>
+      <srv name="CommandBool">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="value" type="bool"/>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="result" type="uint8"/>
+      </srv>
+      <srv name="CommandHome">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="current_gps" type="bool"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="latitude" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="longitude" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="altitude" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="result" type="uint8"/>
+      </srv>
+      <srv name="CommandTOL">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="min_pitch" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="yaw" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="latitude" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="longitude" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="altitude" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="result" type="uint8"/>
+      </srv>
+      <srv name="WaypointPull">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="wp_received" type="uint32"/>
+      </srv>
+      <srv name="WaypointPush">
+        <requestAttributes xsi:type="rosModel:AttributeArray" name="waypoints">
+          <type xsi:type="rosModel:ComposedAttribute" name="waypoint"/>
+        </requestAttributes>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="wp_transfered" type="uint32"/>
+      </srv>
+      <srv name="WaypointClear">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+      </srv>
+      <srv name="WaypointSetCurrent">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="wp_seq" type="uint16"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+      </srv>
+      <srv name="CommandTriggerControl">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="trigger_enable" type="bool"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="integration_time" type="float32"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="result" type="uint8"/>
+      </srv>
+      <srv name="ParamSet">
+        <requestAttributes xsi:type="rosModel:SimpleAttribute" name="param_id" type="string"/>
+        <requestAttributes xsi:type="rosModel:ComposedAttribute" name="value"/>
+        <responseAttributes xsi:type="rosModel:SimpleAttribute" name="success" type="bool"/>
+        <responseAttributes xsi:type="rosModel:ComposedAttribute" name="value"/>
+      </srv>
+    </subpackage>
+  </rospackage>
+  <rospackage name="std_msgs" path="">
+    <msg name="Float64">
+      <attribute xsi:type="rosModel:SimpleAttribute" name="data" type="float64"/>
+    </msg>
+    <msg name="Header">
+      <attribute xsi:type="rosModel:SimpleAttribute" name="seq" type="uint32"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="stamp" type="time"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="frame_id" type="string"/>
+    </msg>
+  </rospackage>
+  <rospackage name="geometry_msgs" path="">
+    <msg name="PoseStamped">
+      <attribute xsi:type="rosModel:ComposedAttribute" name="header"/>
+      <attribute xsi:type="rosModel:ComposedAttribute" name="pose"/>
+    </msg>
+    <msg name="Pose">
+      <attribute xsi:type="rosModel:ComposedAttribute" name="position"/>
+      <attribute xsi:type="rosModel:ComposedAttribute" name="orientation"/>
+    </msg>
+    <msg name="Point">
+      <attribute xsi:type="rosModel:SimpleAttribute" name="x" type="float64"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="y" type="float64"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="z" type="float64"/>
+    </msg>
+    <msg name="Quaternion">
+      <attribute xsi:type="rosModel:SimpleAttribute" name="x" type="float64"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="y" type="float64"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="z" type="float64"/>
+      <attribute xsi:type="rosModel:SimpleAttribute" name="w" type="float64"/>
+    </msg>
+  </rospackage>
+</rosModel:RosSystem>

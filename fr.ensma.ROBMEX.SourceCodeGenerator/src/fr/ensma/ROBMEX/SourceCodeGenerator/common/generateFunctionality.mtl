@@ -1,0 +1,178 @@
+[comment encoding = UTF-8 /]
+[module generateFunctionality('/fr.ensma.ROBMEX.ROSProML/model/processMaker.ecore')]
+[template public generateFunctionality(func : Functionality)]
+
+[comment @main /]
+[file ('gen_func_'+self.name+'.cpp', false, 'Cp1252')]
+
+// AUTOMATICALLY GENERATED FILE FOR: [func.name/]
+
+void main_[func.name/]() {
+[comment 
+
+	GLOBAL VARIABLES
+ /]
+	[for (intVar : LocalVariable | func.main.InternalVariable)]
+		[getIntVarType(intVar)/] [intVar.name/] [if not ((intVar.constantValue.oclIsUndefined() or (intVar.constantValue = '')))] = [intVar.constantValue/] [/if];
+	[/for]
+[comment 
+
+	Functionalities generated from the first one
+ /]
+	[if not (func.main.first.oclIsUndefined())] [generateInstructions(func.main.first)/] [/if]
+}
+
+[/file]
+[/template]
+
+[comment
+============================================ HELPERS ======================================================
+/]
+
+[comment 	Function to be called by MISSION GENERATOR	 /]
+[template public generateGlobalVariables(f : Functionality)]
+
+[for (dp : DataPort | f.inputs->addAll(f.outputs)) before ('// Defining structs:\n')]
+	[if (dp.oclIsTypeOf(Struct))][generateStruct(dp.oclAsType(Struct))/][/if]
+[/for]
+
+[for (dp : DataPort | f.inputs->addAll(f.outputs)) before ('// Global Variables:\n')]
+	[generateVariable(dp.variable)/];
+[/for]
+[/template]
+
+
+[template public generateVariable(var : GlobalVariable)]
+[if (var.oclIsTypeOf(Struct))] s_[var.name/] [var.name/]; [elseif
+	(var.oclIsTypeOf(Array))] [generateArray(var.oclAsType(Array))/] [var.name/]; [elseif
+	(var.oclIsTypeOf(SimpleVariable))] [getVarType(var.oclAsType(SimpleVariable))/] [generateVariableName(var.oclAsType(SimpleVariable))/]; [/if]
+[/template]
+
+
+
+[template public getVarType(var : SimpleVariable)]
+[if (var.type.toString() = 'int8')] short int [elseif
+	(var.type.toString() = 'int16')] int [elseif
+	(var.type.toString() = 'int32')] long int [elseif
+	(var.type.toString() = 'int64')] long long int [elseif
+	(var.type.toString() = 'uint8')] unsigned short int	[elseif
+	(var.type.toString() = 'uint16')] unsigned int [elseif
+	(var.type.toString() = 'uint32')] unsigned long int [elseif
+	(var.type.toString() = 'uint64')] unsigned long long int [elseif
+	(var.type.toString() = 'float32')] double [elseif
+	(var.type.toString() = 'float64')] long double [elseif
+	(var.type.toString() = 'string')] std::string [elseif
+	(var.type.toString() = 'bool')] bool [/if]
+[/template]
+
+
+
+[template public getIntVarType(var : LocalVariable)]
+[if (var.type.toString() = 'int8')] short int [elseif
+	(var.type.toString() = 'int16')] int [elseif
+	(var.type.toString() = 'int32')] long int [elseif
+	(var.type.toString() = 'int64')] long long int [elseif
+	(var.type.toString() = 'uint8')] unsigned short int	[elseif
+	(var.type.toString() = 'uint16')] unsigned int [elseif
+	(var.type.toString() = 'uint32')] unsigned long int [elseif
+	(var.type.toString() = 'uint64')] unsigned long long int [elseif
+	(var.type.toString() = 'float32')] double [elseif
+	(var.type.toString() = 'float64')] long double [elseif
+	(var.type.toString() = 'string')] std::string [elseif
+	(var.type.toString() = 'bool')] bool [/if]
+[/template]
+
+
+
+[template public generateVariableName(var : GlobalVariable)]
+[if not (var.eContainer().oclIsTypeOf(DataPort))][generateVariableName(var.eContainer().oclAsType(GlobalVariable))/]_[/if][var.name/]
+[/template]
+
+
+
+[template public generateStruct(var : Struct)]
+	struct s_[var.name/] {
+		[for (subVar : GlobalVariable | var.members)]
+			[if (subVar.oclIsTypeOf(Struct))] s_[subVar.name/] [subVar.name/]; [elseif
+				(subVar.oclIsTypeOf(SimpleVariable))] [getVarType(subVar.oclAsType(SimpleVariable))/] [subVar.name/]; [elseif
+				(subVar.oclIsTypeOf(Array))] [generateArray(subVar.oclAsType(Array))/] [subVar.name/] [/if]
+		[/for]
+	}
+[/template]
+
+
+
+[template public generateArray(var : Array)]
+	[if 
+		(var.type.oclIsTypeOf(SimpleVariable))] [getVarType(var.type.oclAsType(SimpleVariable))/] [ '[' /][if (var.oclAsType(Array).size <> 0)][var.oclAsType(Array).size/][/if][ ']' /] [elseif
+		(var.type.oclIsTypeOf(Struct))] s_[var.type.name/] [ '[' /][if (var.oclAsType(Array).size <> 0)][var.oclAsType(Array).size/][/if][ ']' /] [elseif
+		(var.type.oclIsTypeOf(Array))] [generateArray(var.type.oclAsType(Array))/] [ '[' /][if (var.oclAsType(Array).size <> 0)][var.oclAsType(Array).size/][/if][ ']' /] [/if]
+[/template]
+
+
+[comment 	DEFINE INSTRUCTION TYPE	 /]
+[template public generateInstructions(inst : Instructions)]
+[if
+	(inst.oclIsTypeOf(Hardcoded))] [inst.oclAsType(Hardcoded).instruction/] ;
+	[elseif
+
+	(inst.oclIsTypeOf(AffectVariable))] [if
+
+		(inst.oclAsType(AffectVariable).variable.oclIsTypeOf(LocalVariable))] [inst.oclAsType(AffectVariable).variable.oclAsType(LocalVariable).name/] = [generateOperation(inst.oclAsType(AffectVariable).valueOf)/] ; [elseif
+		(inst.oclAsType(AffectVariable).variable.oclIsKindOf(GlobalVariable))] [generateVariableName(inst.oclAsType(AffectVariable).variable.oclAsType(GlobalVariable))/] = [generateOperation(inst.oclAsType(AffectVariable).valueOf)/] ; [/if]
+	[elseif
+
+	(inst.oclIsTypeOf(If))] if ([generateBooleanExpression(inst.oclAsType(If).condition)/]) {
+		[generateInstructions(inst.oclAsType(If).ifBlock.first)/]
+	} [if not (inst.oclAsType(If).elseBlock.oclIsUndefined())] else {
+		[generateInstructions(inst.oclAsType(If).elseBlock.first)/]
+	}
+	[/if]
+	[elseif
+
+	(inst.oclIsTypeOf(Loop))] while ([generateBooleanExpression(inst.oclAsType(Loop).while)/]) {
+		[generateInstructions(inst.oclAsType(Loop).loop.first)/]
+	} 
+	[elseif
+
+	(inst.oclIsTypeOf(UpdateGlobalVariable))] /* publish to [inst.oclAsType(UpdateGlobalVariable).dataport.name/] */ [elseif
+
+	(false)] [comment [inst.oclAsType(X).instruction/] [elseif
+
+	(false)] [comment [inst.oclAsType(X).instruction/] [/if]
+[if
+	not (inst.next.oclIsUndefined())] [generateInstructions(inst.next)/] [/if]
+[/template]
+
+
+
+[template public generateBooleanExpression(exp : BooleanExpression)]
+[if
+	(exp.oclIsTypeOf(Comparison))] ([generateOperation(exp.oclAsType(Comparison).firstTerm)/]) [if
+		(exp.oclAsType(Comparison).type.toString() = 'equals')] == [elseif
+		(exp.oclAsType(Comparison).type.toString() = 'smaller')] < [elseif
+		(exp.oclAsType(Comparison).type.toString() = 'greater')] > [elseif
+		(exp.oclAsType(Comparison).type.toString() = 'smallerOrEqual')] <= [elseif
+		(exp.oclAsType(Comparison).type.toString() = 'greaterOrEqual')] >= [/if] ([generateOperation(exp.oclAsType(Comparison).secondTerm)/]) [elseif
+
+	(exp.oclIsTypeOf(And))] /*and*/ [elseif
+
+	(exp.oclIsTypeOf(Or))] /*or*/ [elseif
+
+	(exp.oclIsTypeOf(Not))] /*not*/ [/if]
+[/template]
+
+
+
+[template public generateOperation(op : OperationTerm)]
+[if (op.oclIsTypeOf(Operation))] ([generateOperation(op.oclAsType(Operation).firstTerm)/]) [if
+		(op.oclAsType(Operation).type.toString() = 'SUM')] + [elseif
+		(op.oclAsType(Operation).type.toString() = 'SUBTRACTION')] - [elseif
+		(op.oclAsType(Operation).type.toString() = 'MULTIPLICATION')] * [elseif
+		(op.oclAsType(Operation).type.toString() = 'DIVISION')] / [elseif
+		(op.oclAsType(Operation).type.toString() = 'POWER')] ^ [/if] ([generateOperation(op.oclAsType(Operation).secondTerm)/]) [elseif
+	(op.oclIsTypeOf(ReferenceVariable))] [if
+		(op.oclAsType(ReferenceVariable).variable.oclIsTypeOf(LocalVariable))] [op.oclAsType(ReferenceVariable).variable.oclAsType(LocalVariable).name/] [elseif
+		((op.oclAsType(ReferenceVariable).variable.oclIsKindOf(GlobalVariable)))] [generateVariableName(op.oclAsType(ReferenceVariable).variable.oclAsType(GlobalVariable))/] [/if] [elseif
+	(op.oclIsTypeOf(Constant))] [op.oclAsType(Constant).constantValue/] [/if] 
+[/template]

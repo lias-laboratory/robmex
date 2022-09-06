@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ROSMiLan:Mission
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ROSMiLan="http://www.example.org/ROSMiLan"
+    xsi:schemaLocation="http://www.example.org/ROSMiLan ROSMiLan.ecore"
+    name="Sequence">
+  <steps xsi:type="ROSMiLan:Element"
+      next="Décoler"
+      name="Armer">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/Arm.xmi#Arm"/>
+  </steps>
+  <steps xsi:type="ROSMiLan:Element"
+      next="Cercle"
+      name="Décoler">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/TakeOff.xmi#TakeOff"/>
+  </steps>
+  <steps xsi:type="ROSMiLan:Element"
+      next="Attendre"
+      name="Cercle">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/Circle.xmi#Circle"/>
+  </steps>
+  <steps xsi:type="ROSMiLan:Element"
+      next="Atterrir"
+      name="Attendre">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/WaitStill.xmi#WaitStill"/>
+  </steps>
+  <steps xsi:type="ROSMiLan:Element"
+      name="Atterrir">
+    <core href="../../fr.ensma.ROBMEX.ROSProML/model/BE/Land.xmi#Land"/>
+  </steps>
+</ROSMiLan:Mission>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processMaker:Functionality xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processMaker="http://www.example.org/processMaker" xsi:schemaLocation="http://www.example.org/processMaker processMaker.ecore" name="commandThrottle" frequency="15.0">
+  <main name="translate to motor power" first="//@main/@instructions.0">
+    <instructions xsi:type="processMaker:If" next="//@main/@instructions.1">
+      <condition xsi:type="processMaker:Comparison" description="if reverse is true">
+        <firstTerm xsi:type="processMaker:ReferenceVariable" variable="reverse"/>
+        <secondTerm xsi:type="processMaker:Constant" constantValue="true"/>
+      </condition>
+      <ifBlock name="needs to reverse" first="//@main/@instructions.0/@ifBlock/@instructions.0">
+        <instructions xsi:type="processMaker:AffectVariable" variable="affectingPower">
+          <valueOf xsi:type="processMaker:Operation" type="MULTIPLICATION">
+            <firstTerm xsi:type="processMaker:ReferenceVariable" variable="motorBasePower"/>
+            <secondTerm xsi:type="processMaker:Constant" constantValue="-1"/>
+          </valueOf>
+        </instructions>
+      </ifBlock>
+      <elseBlock name="needs to go forward" first="//@main/@instructions.0/@elseBlock/@instructions.0">
+        <instructions xsi:type="processMaker:AffectVariable" variable="affectingPower">
+          <valueOf xsi:type="processMaker:ReferenceVariable" variable="motorBasePower"/>
+        </instructions>
+      </elseBlock>
+    </instructions>
+    <instructions xsi:type="processMaker:Loop">
+      <while xsi:type="processMaker:Comparison" description="counter smaller than array size" type="smaller">
+        <firstTerm xsi:type="processMaker:ReferenceVariable" variable="i"/>
+        <secondTerm xsi:type="processMaker:Constant" constantValue="4"/>
+      </while>
+      <loop name="affect" first="//@main/@instructions.1/@loop/@instructions.0">
+        <instructions xsi:type="processMaker:Hardcoded" next="//@main/@instructions.1/@loop/@instructions.1" instruction="motorArray[i] = affectingPower"/>
+        <instructions xsi:type="processMaker:AffectVariable" variable="i">
+          <valueOf xsi:type="processMaker:Operation">
+            <firstTerm xsi:type="processMaker:ReferenceVariable" variable="i"/>
+            <secondTerm xsi:type="processMaker:Constant" constantValue="1"/>
+          </valueOf>
+        </instructions>
+      </loop>
+    </instructions>
+    <InternalVariable name="motorBasePower" constantValue="100" type="float64"/>
+    <InternalVariable name="affectingPower" constantValue="" type="float64"/>
+    <InternalVariable name="i" constantValue="" type="int64"/>
+  </main>
+  <inputs name="reverseThrottle">
+    <variable xsi:type="processMaker:SimpleVariable" name="reverse" type="bool"/>
+  </inputs>
+  <outputs name="motorPower">
+    <variable xsi:type="processMaker:Array" name="motorArray" size="4">
+      <type xsi:type="processMaker:SimpleVariable" name="wheelPower" type="float64"/>
+    </variable>
+  </outputs>
+</processMaker:Functionality>

@@ -1,0 +1,142 @@
+[comment encoding = UTF-8 /] 
+[module generateRosNode('http://www.example.org/rosModel')]
+
+[template public generateNode(aClass : Node)]
+ 
+	[file ('gen_node_'+self.name+'.cpp', false, 'UTF-8')]
+
+[comment: Comments to help specify the file/]
+/* 
+ * AUTOMATICALLY GENERATED FILE
+ *		ROBMEX Framework
+ * 
+ * Node: [self.name/]
+ *
+ * [self.description/]
+ *
+ */
+
+[comment
+
+		Section INCLUDE
+		For each topic and each service used:
+
+			#include "fatherPackage/Structure.h"
+	/]
+
+#include "ros/ros.h"
+
+[for (topic : Topic | self.publishTo->union(self.subscribeTo)->asSet())]#include "[topic.struct.eContainer(RosPackage).name/]/[topic.struct.name/].h"
+[/for]
+
+[for (service : Service | self.serverOf->union(self.clientOf)->asSet())]#include "[service.srvdatastruct.eContainer(RosPackage).name/]/[service.srvdatastruct.name/].h"
+[/for]
+
+[comment
+
+		Section CALLBACKS
+		For each subscribed topic:
+
+			void callback_topic_name (const fatherPackage::Structure::ConstPtr& msg) {
+				// Code
+			}
+	/]
+
+// Callbacks to subscribed topics:
+
+[for (topic : Topic | self.subscribeTo)]
+void callback_[topic.name.replace('/', '_')/](const [topic.struct.eContainer(RosPackage).name/]::[topic.struct.name/]::ConstPtr& msg)
+{
+	// Code
+}
+
+[/for]
+
+[comment
+
+		Section SERVICES
+		For each service hosted in the node:
+
+			bool serviceFunction_service_name (fatherPackage::Structure::Request& msg, fatherPackage::Structure::Response& res) {
+				// Code
+				return true;
+			}
+	/]
+
+// Procedures remotely called by services:
+
+[for (service : Service | self.serverOf)]bool serviceFunction_[service.name.replace('/', '_')/]([service.srvdatastruct.eContainer(RosPackage).name/]::[service.srvdatastruct.name/]::Request& req,
+[service.srvdatastruct.eContainer(RosPackage).name/]::[service.srvdatastruct.name/]::Response& res)
+{
+	// Code
+	return true;
+}
+
+[/for]
+
+int main(int argc, char** argv)
+{
+	ros::init(argc, argv, "[self.name/]");
+	ros::NodeHandle n;
+
+[comment
+
+		Section REGISTRATION
+		For all topics and services:
+
+			ros::Publisher pub_topic_name = n.advertise<fatherPackage::Structure> ("topicName", 1);
+			ros::Subscriber subs_topic_name = n.subscribe ("topicName", 1, callback_topic_name);
+			ros::ServiceServer serv_service_name = n.advertiseService ("serviceName", serviceFunction_service_name);
+			ros::ServiceClient client_service_name = n.serviceClient<fatherPackage::Structure> ("serviceName");
+			
+	/]
+
+	[for (topic : Topic | self.publishTo)]
+	ros::Publisher pub_[topic.name.replace('/', '_')/] = n.advertise<[topic.struct.eContainer(RosPackage).name/]::[topic.struct.name/]>("[topic.name/]", 1);
+	[/for]
+
+	[for (topic : Topic | self.subscribeTo)]
+	ros::Subscriber subs_[topic.name.replace('/', '_')/] = n.subscribe("[topic.name/]", 1, callback_[topic.name.replace('/', '_')/]);
+	[/for]
+	
+	[for (service : Service | self.serverOf)]
+	ros::ServiceServer serv_[service.name.replace('/', '_')/] = n.advertiseService("[service.name/]", serviceFunction_[service.name.replace('/', '_')/]);
+	[/for]
+
+	[for (service : Service | self.clientOf)]
+	ros::ServiceClient client_[service.name.replace('/', '_')/] = n.serviceClient<[service.srvdatastruct.eContainer(RosPackage).name/]::[service.srvdatastruct.name/]>("[service.name/]");
+	[/for]
+
+[comment
+
+		Section CORE
+		If the node has a defined frequency:
+
+			ros::Rate loop_rate(frequency);
+			while (ros::ok() && nodeAlive) {
+				// Code
+			}
+
+		Else:
+
+			//Code
+			
+	/]
+ 
+	[if (self.frequency <> null)]
+		[if (self.frequency <> 0)]
+	ros::Rate loop_rate([self.frequency/]);
+		[/if]
+	while (ros::ok() && nodeAlive) {
+		// Code
+		loop_rate.sleep();
+	}
+	[else]
+	// Code
+	[/if]
+
+	return 0;
+}
+	[/file]
+
+[/template]

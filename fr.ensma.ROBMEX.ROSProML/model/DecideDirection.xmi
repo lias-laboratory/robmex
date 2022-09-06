@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processMaker:Functionality xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processMaker="http://www.example.org/processMaker" xsi:schemaLocation="http://www.example.org/processMaker processMaker.ecore" name="decideDirection" frequency="20.0">
+  <main name="main" first="//@main/@instructions.0">
+    <instructions xsi:type="processMaker:If" next="//@main/@instructions.1">
+      <condition xsi:type="processMaker:Comparison" description="if distance measured is smaller than limit" type="smaller">
+        <firstTerm xsi:type="processMaker:ReferenceVariable" variable="m"/>
+        <secondTerm xsi:type="processMaker:ReferenceVariable" variable="closeLimit"/>
+      </condition>
+      <ifBlock name="true" first="//@main/@instructions.0/@ifBlock/@instructions.0">
+        <instructions xsi:type="processMaker:AffectVariable" variable="value">
+          <valueOf xsi:type="processMaker:Constant" constantValue="true"/>
+        </instructions>
+      </ifBlock>
+      <elseBlock name="notTooClose" first="//@main/@instructions.0/@elseBlock/@instructions.0">
+        <instructions xsi:type="processMaker:If">
+          <condition xsi:type="processMaker:Comparison" description="sufficiently far" type="greater">
+            <firstTerm xsi:type="processMaker:ReferenceVariable" variable="m"/>
+            <secondTerm xsi:type="processMaker:ReferenceVariable" variable="farEnoughLimit"/>
+          </condition>
+          <ifBlock name="far enough" first="//@main/@instructions.0/@elseBlock/@instructions.0/@ifBlock/@instructions.0">
+            <instructions xsi:type="processMaker:AffectVariable" variable="value">
+              <valueOf xsi:type="processMaker:Constant" constantValue="false"/>
+            </instructions>
+          </ifBlock>
+        </instructions>
+      </elseBlock>
+    </instructions>
+    <instructions xsi:type="processMaker:UpdateGlobalVariable" dataport="reverse"/>
+    <InternalVariable name="closeLimit" constantValue="10"/>
+    <InternalVariable name="farEnoughLimit" constantValue="20"/>
+  </main>
+  <inputs name="distance">
+    <variable xsi:type="processMaker:SimpleVariable" name="m" type="float64"/>
+  </inputs>
+  <outputs name="reverse">
+    <variable xsi:type="processMaker:SimpleVariable" name="value" type="bool"/>
+  </outputs>
+</processMaker:Functionality>
