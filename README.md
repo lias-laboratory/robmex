@@ -19,7 +19,7 @@ To execute:
 
 ## Download
 
-The RoBMEX modelling framework can be downloaded at /projects/robmex/files. 
+The RoBMEX modelling framework can be downloaded at [/releases](/releases).
 
 ## Install
 
