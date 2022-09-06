@@ -59,3 +59,21 @@ With the Modelling perspective:
 * Expand the items and, for adding elements, right-click the instance, go to _New Child_ and select the desired element
 
 * Their attributes can be seen and edited in the Properties tab, normally bellow the screen
+
+## Generate code
+
+* Select the desired *.mtl* code in the *SourceCodeGenerator* project, in the *src* folder, in the project ending with *.common*
+
+* Click on the arrow next to the **Run** button (green, on top of the screen), and select **Run Configurations**
+
+* Set the Model as the *.xmi* file representing the instance that will have its code automatically generated
+
+* Choose a target folder
+
+* Run
+
+## Contributors
+
+* [Matheus LADEIRA](https://www.lias-lab.fr/fr/members/matheusladeira/)
+* [Yassine OUHAMMOU](https://www.lias-lab.fr/fr/members/yassineouhammou/)
+* [Emmanuel GROLLEAU](https://www.lias-lab.fr/fr/members/emmanuelgrolleau/)
