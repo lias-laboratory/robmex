@@ -72,8 +72,12 @@ With the Modelling perspective:
 
 * Run
 
+## Software licence agreement
+
+Details the license agreement of TME: [LICENSE](LICENSE)
+
 ## Contributors
 
-* [Matheus LADEIRA](https://www.lias-lab.fr/fr/members/matheusladeira/)
-* [Yassine OUHAMMOU](https://www.lias-lab.fr/fr/members/yassineouhammou/)
-* [Emmanuel GROLLEAU](https://www.lias-lab.fr/fr/members/emmanuelgrolleau/)
+* [Matheus LADEIRA](https://www.lias-lab.fr/members/matheusladeira/)
+* [Yassine OUHAMMOU](https://www.lias-lab.fr/members/yassineouhammou/)
+* [Emmanuel GROLLEAU](https://www.lias-lab.fr/members/emmanuelgrolleau/)
