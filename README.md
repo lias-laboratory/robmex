@@ -72,7 +72,7 @@ With the Modelling perspective:
 
 * Run
 
-## Software licence agreement
+## Software license agreement
 
 Details the license agreement of TME: [LICENSE](LICENSE)
 
